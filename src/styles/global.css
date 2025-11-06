@@ -1,0 +1,241 @@
+html, body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Estilo para el header de la página "Nosotros" */
+.header-nosotros {
+  background: url("../img/banner5.png") no-repeat center center/cover;
+  position: relative;
+  color: #fff;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.header-nosotros::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5); /* negro con 50% transparencia */
+}
+
+.header-nosotros .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Colores principales*/
+:root{
+  --foodix-red: #d53a27;       /* rojo tomate */
+  --foodix-red-dark:#C92F1C;   /* hover/active */
+  --foodix-charcoal:#1F2937;   /* textos */
+  --foodix-ivory:#FFF8F2;      /* fondo cálido */
+  --foodix-sand:#F4E9E1;       /* secciones suaves */
+}
+
+html, body{
+  background: var(--foodix-ivory);
+  color: var(--foodix-charcoal);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Titulares elegantes */
+h1,h2,h3,h4,h5,h6,.brand{
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+  letter-spacing: .2px;
+}
+
+/* Títulos de sección con barra decorativa */
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 2rem 0;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  font-family: 'Playfair Display', serif; 
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;             
+  height: 4px;             
+  background: var(--foodix-red);
+  margin: 8px auto 0;      
+  border-radius: 2px;      
+}
+
+
+/* NavBar Foodix */
+.navbar-foodix{
+  background: var(--foodix-red);
+}
+.navbar-foodix .navbar-brand,
+.navbar-foodix .nav-link{
+  color:#fff !important;
+}
+.navbar-foodix .nav-link:hover{
+  opacity: .9;
+}
+
+/* Forzar el color original del navbar */
+.navbar-foodix {
+  background-color: #d53a27 !important; /* Rojo tomate */
+}
+.navbar-foodix .navbar-brand,
+.navbar-foodix .nav-link {
+  color: #fff !important;
+}
+.navbar-foodix .nav-link:hover {
+  opacity: 0.9;
+}
+
+/* Ajustar el color del navbar al diseño original */
+.navbar-foodix {
+  background-color: var(--foodix-red);
+}
+.navbar-foodix .navbar-brand,
+.navbar-foodix .nav-link {
+  color: #fff;
+}
+.navbar-foodix .nav-link:hover {
+  opacity: 0.9;
+}
+
+/* Estilo para el navbar */
+.navbar-foodix {
+  font-family: 'Playfair Display', serif;
+  background-color: var(--foodix-charcoal);
+  color: var(--foodix-ivory);
+}
+.navbar-foodix .nav-link {
+  font-family: 'Inter', sans-serif;
+  color: var(--foodix-ivory);
+}
+.navbar-foodix .navbar-brand img {
+  max-height: 40px;
+}
+
+/* Botón primario Foodix (por si lo usamos en el hero/lugares) */
+.btn-foodix{
+  background: var(--foodix-red);
+  border:none;
+  color:#fff;
+}
+.btn-foodix:hover{
+  background: var(--foodix-red-dark);
+}
+
+/* Estilo para las imágenes del blog */
+.blog-img {
+  width: 100%;           /* ocupa todo el ancho del contenedor */
+  height: 250px;         /* altura fija */
+  object-fit: cover;     /* recorta y centra la imagen */
+  object-position: center;
+}
+
+/* Imagen grande del detalle de blog */
+.blog-hero{
+  width: 100%;
+  height: 380px;           /* alto uniforme en móviles */
+  object-fit: cover;       /* recorta sin deformar */
+  object-position: center; /* centra el recorte */
+  border-radius: .5rem;    /* opcional: esquinas redondeadas */
+}
+
+@media (min-width: 768px){
+  .blog-hero{ height: 460px; }  /* un poco más alta en pantallas medianas+ */
+}
+
+/* Estilo para las imágenes de productos en detalle */
+.obj-cover-200 {
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.thumb-img:hover {
+  opacity: 0.8;
+}
+
+/* Ajuste del logo en la navbar */
+.navbar-brand img {
+  height: 60px;   /* o el tamaño que quieras */
+  width: auto;    /* mantiene proporción */
+}
+
+/* Sidebar Admin */
+.sidebar {
+  min-height: 100vh;
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #dee2e6;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sidebar .nav-link {
+  color: var(--foodix-charcoal);
+  font-weight: 500;
+}
+
+.sidebar .nav-link.active {
+  background-color: var(--foodix-red);
+  color: #fff !important;
+  border-radius: 8px;
+}
+
+.content {
+  margin-left: 240px;
+  padding: 20px;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  width: 100%;
+}
+
+.container-fluid {
+  padding: 0 15px;
+}
+
+/* Estilos más específicos para evitar conflictos */
+body * {
+  font-family: inherit;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Ajustar estilos para clases de Bootstrap */
+.fw-bold {
+  font-family: 'Playfair Display', serif;
+}
+.lead {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Ajustar la especificidad del navbar */
+.navbar.navbar-foodix {
+  background-color: var(--foodix-red);
+}
+.navbar.navbar-foodix .navbar-brand,
+.navbar.navbar-foodix .nav-link {
+  color: #fff;
+}
+.navbar.navbar-foodix .nav-link:hover {
+  opacity: 0.9;
+}

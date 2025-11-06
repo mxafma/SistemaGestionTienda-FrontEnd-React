@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Aceite de Oliva Extra 1L",
+    "price": 7990,
+    "image": "/img/aceite-oliva.jpg",
+    "description": "Aceite de oliva extra virgen, ideal para ensaladas y cocina saludable."
+  },
+  {
+    "id": 2,
+    "name": "Arroz Basmati 5kg",
+    "price": 20990,
+    "image": "/img/arroz-basmati.jpg",
+    "description": "Arroz Basmati de grano largo, perfecto para platos orientales y gourmet."
+  },
+  {
+    "id": 3,
+    "name": "Harina Integral 25kg",
+    "price": 25990,
+    "image": "/img/harina-integral.jpg",
+    "description": "Harina integral para panadería y repostería saludable."
+  },
+  {
+    "id": 4,
+    "name": "Vinagre Balsámico 500ml",
+    "price": 15990,
+    "image": "/img/vinagre-balsamico.jpg",
+    "description": "Vinagre balsámico de alta calidad, ideal para ensaladas y marinados."
+  }
+]
