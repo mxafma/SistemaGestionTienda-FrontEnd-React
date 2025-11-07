@@ -9,10 +9,14 @@ interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products, agregarAlCarrito }) => {
   return (
-    <div className="product-list">
-      {products.map((product: Product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+    <div className="container my-4">
+      <div className="row">
+        {products.map((product: Product) => (
+          <div key={product.id} className="col-md-6 col-lg-4 col-xl-3 mb-4">
+            <ProductCard product={product} onAddToCart={agregarAlCarrito} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

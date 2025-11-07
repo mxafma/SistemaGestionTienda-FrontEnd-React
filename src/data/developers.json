@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Matías Arauz",
+    "title": "Estudiante de Ingeniería Civil Informática - Duoc UC",
+    "description": "Desarrollador principal de la plataforma Foodix, encargado de la implementación de frontend y backend del proyecto.",
+    "avatarSrc": "/src/shared/assets/dev-avatar.jpg",
+    "role": "Full Stack Developer",
+    "linkedin": "https://linkedin.com/in/matias-arauz",
+    "github": "https://github.com/mxafma"
+  }
+]

@@ -15,7 +15,10 @@ const Home: React.FC = () => {
         description="Insumos gourmet de máxima calidad para restaurantes, chefs y amantes de la cocina. También para quienes buscan ese ingrediente especial que marque la diferencia en casa."
         image="/src/shared/assets/banner4.png"
       />
-      <ProductList products={productosData} agregarAlCarrito={agregarAlCarrito} />
+      <section className="container py-5 text-center">
+        <h2 className="section-title">Nuestros productos</h2>
+        <ProductList products={productosData} agregarAlCarrito={agregarAlCarrito} />
+      </section>
     </div>
   );
 };

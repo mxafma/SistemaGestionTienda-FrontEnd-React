@@ -2,9 +2,12 @@ html, body {
   font-family: 'Inter', sans-serif;
 }
 
-/* Estilo para el header de la página "Nosotros" */
+/* Estilo para el header de las páginas */
 .header-nosotros {
-  background: url("../img/banner5.png") no-repeat center center/cover;
+  background: linear-gradient(135deg, var(--foodix-red) 0%, #d4002a 100%);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   position: relative;
   color: #fff;
   min-height: 40vh;
@@ -35,7 +38,7 @@ html, body {
   --foodix-sand:#F4E9E1;       /* secciones suaves */
 }
 
-html, body{
+html body{
   background: var(--foodix-ivory);
   color: var(--foodix-charcoal);
   font-family: 'Inter', sans-serif;
@@ -70,63 +73,45 @@ h1,h2,h3,h4,h5,h6,.brand{
 
 
 /* NavBar Foodix */
-.navbar-foodix{
+nav.navbar.navbar-foodix {
   background: var(--foodix-red);
+  font-family: 'Playfair Display', serif;
 }
-.navbar-foodix .navbar-brand,
-.navbar-foodix .nav-link{
-  color:#fff !important;
-}
-.navbar-foodix .nav-link:hover{
-  opacity: .9;
-}
-
-/* Forzar el color original del navbar */
-.navbar-foodix {
-  background-color: #d53a27 !important; /* Rojo tomate */
-}
-.navbar-foodix .navbar-brand,
-.navbar-foodix .nav-link {
-  color: #fff !important;
-}
-.navbar-foodix .nav-link:hover {
-  opacity: 0.9;
-}
-
-/* Ajustar el color del navbar al diseño original */
-.navbar-foodix {
-  background-color: var(--foodix-red);
-}
-.navbar-foodix .navbar-brand,
-.navbar-foodix .nav-link {
+nav.navbar.navbar-foodix .navbar-brand,
+nav.navbar.navbar-foodix .nav-link {
   color: #fff;
 }
-.navbar-foodix .nav-link:hover {
+nav.navbar.navbar-foodix .nav-link {
+  font-family: 'Inter', sans-serif;
+}
+nav.navbar.navbar-foodix .nav-link:hover {
   opacity: 0.9;
 }
-
-/* Estilo para el navbar */
-.navbar-foodix {
-  font-family: 'Playfair Display', serif;
-  background-color: var(--foodix-charcoal);
-  color: var(--foodix-ivory);
-}
-.navbar-foodix .nav-link {
-  font-family: 'Inter', sans-serif;
-  color: var(--foodix-ivory);
-}
-.navbar-foodix .navbar-brand img {
-  max-height: 40px;
+nav.navbar.navbar-foodix .navbar-brand img {
+  max-height: 60px;
+  width: auto;
 }
 
-/* Botón primario Foodix (por si lo usamos en el hero/lugares) */
-.btn-foodix{
+/* Botón primario Foodix */
+.btn.btn-foodix{
   background: var(--foodix-red);
-  border:none;
-  color:#fff;
+  border: none;
+  color: #fff;
+  transition: all 0.3s ease;
 }
-.btn-foodix:hover{
+.btn.btn-foodix:hover{
   background: var(--foodix-red-dark);
+  color: #000;
+}
+
+/* Estilos específicos para las product cards */
+.card-title-product {
+  font-family: 'Inter', sans-serif !important;
+  text-align: center;
+}
+
+.card-price-product {
+  text-align: center;
 }
 
 /* Estilo para las imágenes del blog */

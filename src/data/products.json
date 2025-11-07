@@ -8,9 +8,14 @@
   },
   {
     "id": 2,
-    "name": "Arroz Basmati 5kg",
+    "name": "Arroz Basmati 5kg", 
     "price": 20990,
     "image": "/img/arroz-basmati.jpg",
+    "images": [
+      "/img/arroz-basmati.jpg",
+      "https://media.makeameme.org/created/placeholder-9d395b173f.jpg",
+      "https://media.makeameme.org/created/placeholder-9d395b173f.jpg"
+    ],
     "description": "Arroz Basmati de grano largo, perfecto para platos orientales y gourmet."
   },
   {
@@ -23,8 +28,36 @@
   {
     "id": 4,
     "name": "Vinagre Balsámico 500ml",
-    "price": 15990,
+    "price": 6990,
     "image": "/img/vinagre-balsamico.jpg",
-    "description": "Vinagre balsámico de alta calidad, ideal para ensaladas y marinados."
+    "description": "Vinagre balsámico italiano, excelente para aderezos y marinados."
+  },
+  {
+    "id": 5,
+    "name": "Pimienta Negra 250gr",
+    "price": 2500,
+    "image": "/img/pimienta-negra.jpg",
+    "description": "Pimienta negra molida, condimento esencial en la cocina."
+  },
+  {
+    "id": 6,
+    "name": "Sal de Mar 1kg",
+    "price": 18990,
+    "image": "/img/sal-mar.jpg",
+    "description": "Sal de mar natural, ideal para realzar el sabor de tus comidas."
+  },
+  {
+    "id": 7,
+    "name": "Tomate Deshidratado 25gr",
+    "price": 2550,
+    "image": "/img/tomate-deshidratado.jpg",
+    "description": "Tomate deshidratado, perfecto para ensaladas y pastas."
+  },
+  {
+    "id": 8,
+    "name": "Queso Parmesano Reggiano Dop 18m Boni. Italiano 1kg",
+    "price": 46990,
+    "image": "/img/queso-parmesano.jpg",
+    "description": "Queso parmesano italiano madurado 18 meses, sabor intenso y auténtico."
   }
 ]

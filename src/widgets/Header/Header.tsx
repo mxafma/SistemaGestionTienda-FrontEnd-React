@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useCart } from '../../shared/hooks/useCart';
 import '../../styles/global.css';
 
 const Header = () => {
+  const { totalItems } = useCart();
   return (
     <nav className="navbar navbar-expand-lg navbar-dark navbar-foodix border-0">
       <div className="container">
@@ -27,7 +29,7 @@ const Header = () => {
               <Link className="nav-link" to="/products">Productos</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">Nosotros</Link>
+              <Link className="nav-link" to="/nosotros">Nosotros</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/blog">Blog</Link>
@@ -46,7 +48,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/cart">
-                <i className="bi bi-cart"></i> Carrito (<span id="cart-count">0</span>)
+                <i className="bi bi-cart"></i> Carrito ({totalItems})
               </Link>
             </li>
           </ul>

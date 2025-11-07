@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Espacio Food & Service 2025",
+    "description": "Italia desembarca como invitado de honor en la megaferia que reunirá a más de 20 países, 35 mil m² de sabores y tradiciones culinarias del 30 de septiembre al 2 de octubre en Espacio Riesco, Huechuraba.",
+    "image": "/src/shared/assets/blog1.jpg",
+    "slug": "espacio-food-service-2025",
+    "date": "2025-09-30",
+    "category": "Eventos"
+  },
+  {
+    "id": 2,
+    "title": "Evita la gripe: 5 alimentos ricos en Vitamina C",
+    "description": "La vitamina C es una de las aliadas más efectivas cuando se trata de fortalecer el sistema inmunológico, reducir el riesgo de gripe y acelerar la recuperación del cuerpo. Aunque solemos pensar en la naranja como su fuente principal, existen otros alimentos que contienen incluso más cantidad de este nutriente esencial.",
+    "image": "/src/shared/assets/blog2.jpg",
+    "slug": "alimentos-ricos-vitamina-c",
+    "date": "2025-11-01",
+    "category": "Nutrición"
+  }
+]

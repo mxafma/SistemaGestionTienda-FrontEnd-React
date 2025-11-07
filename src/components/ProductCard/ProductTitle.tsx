@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface ProductTitleProps {
   title: string;
@@ -7,11 +8,11 @@ interface ProductTitleProps {
 
 const ProductTitle: React.FC<ProductTitleProps> = ({ title, id }) => {
   return (
-    <h5 className="card-title">
-      <a href={`detalle-producto.html?id=${id}`} className="text-decoration-none">
+    <h6 className="card-title mb-1 card-title-product">
+      <Link to={`/product/${id}`} className="text-decoration-none text-dark">
         {title}
-      </a>
-    </h5>
+      </Link>
+    </h6>
   );
 };
 
