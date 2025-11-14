@@ -2,13 +2,13 @@ import React, { createContext, useContext, useState, useMemo, useCallback, useEf
 import type { ReactNode } from 'react';
 import type { Product } from '../../shared/types/types';
 
-// 🛒 Tipo para los items del carrito
+//  Tipo para los items del carrito
 interface CartItem extends Product {
   quantity: number;
   subtotal: number;
 }
 
-// 📦 Context Type
+//  Context Type
 interface CartContextType {
   items: CartItem[];
   totalItems: number;
@@ -136,7 +136,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     );
   }, []);
 
-  // ➖ Decrementar cantidad en 1
+  //  Decrementar cantidad en 1
   const decrementQuantity = useCallback((productId: number) => {
     setItems((prevItems) => {
       const item = prevItems.find((item) => item.id === productId);
