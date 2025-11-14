@@ -1,6 +1,5 @@
 import ProductImage from './ProductImage';
 import ProductTitle from './ProductTitle';
-import ProductDescription from './ProductDescription';
 import ProductPrice from './ProductPrice';
 import ProductButton from './ProductButton';
 import type { Product } from '../../shared/types/types';

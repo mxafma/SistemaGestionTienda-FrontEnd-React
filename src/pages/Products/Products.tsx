@@ -3,7 +3,7 @@ import ProductList from '../../components/ProductCard/ProductList';
 import productosData from '../../data/products.json';
 
 const Products: React.FC = () => {
-  const agregarAlCarrito = (id: number) => {
+  const agregarAlCarrito = (_id: number) => {
     // Legacy callback - ahora el carrito se maneja directamente en ProductButton
   };
 
