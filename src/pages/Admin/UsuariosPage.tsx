@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { getUsuarios, createUsuario, deleteUsuario } from "../../shared/hooks/usuariosApi";
+import { getUsuarios, createUsuario, deleteUsuario, getUsuarioById, updateUsuario } from "../../shared/hooks/usuariosApi";
 import type { UsuarioDTO, UsuarioPayload } from "../../shared/hooks/usuariosApi";
 
 export default function UsuariosPage() {
@@ -46,7 +46,7 @@ export default function UsuariosPage() {
       const creado = await createUsuario(payload);
       console.log("Crear usuario - respuesta:", creado);
       setUsuarios((prev) => [...prev, creado]);
-      setNuevo({ nombre: "", apellido: "", email: "", password: "", rol: "USER" });
+      setNuevo({ nombre: "", apellido: "", email: "", password: "", rol: "USER", activo: true });
       setError("");
     } catch (err: unknown) {
       let msg = "Error al crear usuario";
@@ -66,6 +66,51 @@ export default function UsuariosPage() {
       } else {
         console.error("Error crear usuario - unknown", err);
       }
+      setError(msg);
+    }
+    setLoading(false);
+  };
+
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingData, setEditingData] = useState<Partial<UsuarioDTO> | null>(null);
+
+  const startEdit = (u: UsuarioDTO) => {
+    setEditingId(u.id);
+    setEditingData({ ...u });
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditingData(null);
+  };
+
+  const saveEdit = async () => {
+    if (!editingId || !editingData) return;
+    setLoading(true);
+    try {
+      const serverUser = await getUsuarioById(editingId);
+      const merged: any = { ...serverUser };
+      if (editingData.nombre !== undefined) merged.nombre = editingData.nombre;
+      if (editingData.apellido !== undefined) merged.apellido = editingData.apellido;
+      if (editingData.email !== undefined) merged.email = editingData.email;
+      // if password field provided in editData, send as passwordHash to match backend
+      if ((editingData as any).password) {
+        merged.passwordHash = (editingData as any).password;
+      }
+      if (editingData.rol !== undefined) merged.rol = (editingData.rol || "USER").toUpperCase();
+      if (editingData.activo !== undefined) merged.activo = editingData.activo;
+
+      const updated = await updateUsuario(editingId, merged as any);
+      setUsuarios((prev) => prev.map((x) => (x.id === updated.id ? updated : x)));
+      setError("");
+      cancelEdit();
+    } catch (err: unknown) {
+      let msg = "Error al actualizar usuario";
+      if (axios.isAxiosError(err) && err.response?.data) {
+        const d: any = err.response.data;
+        if (typeof d === "string") msg += ": " + d;
+        else if (d.message) msg += ": " + d.message;
+      } else if (err instanceof Error) msg += ": " + err.message;
       setError(msg);
     }
     setLoading(false);
@@ -134,14 +179,48 @@ export default function UsuariosPage() {
             {usuarios.map((u) => (
               <tr key={u.id}>
                 <td>{u.id}</td>
-                <td>{u.nombre}</td>
-                <td>{u.apellido}</td>
-                <td>{u.email}</td>
-                <td>{u.rol}</td>
-                <td>{String(u.activo)}</td>
-                <td>
-                  <button onClick={() => eliminar(u.id)} disabled={loading}>Eliminar</button>
-                </td>
+                {editingId === u.id && editingData ? (
+                  <>
+                    <td>
+                      <input value={editingData.nombre ?? ''} onChange={(e) => setEditingData({ ...editingData, nombre: e.target.value })} />
+                    </td>
+                    <td>
+                      <input value={editingData.apellido ?? ''} onChange={(e) => setEditingData({ ...editingData, apellido: e.target.value })} />
+                    </td>
+                    <td>
+                      <input value={editingData.email ?? ''} onChange={(e) => setEditingData({ ...editingData, email: e.target.value })} />
+                    </td>
+                    <td>
+                      <select value={(editingData.rol as string) ?? 'USER'} onChange={(e) => setEditingData({ ...editingData, rol: e.target.value })}>
+                        <option value="USER">USER</option>
+                        <option value="ADMIN">ADMIN</option>
+                      </select>
+                    </td>
+                    <td style={{ textAlign: 'center' }}>
+                      <input type="checkbox" checked={!!editingData.activo} onChange={(e) => setEditingData({ ...editingData, activo: e.target.checked })} />
+                    </td>
+                    <td>
+                      <div style={{ display: 'flex', gap: 6 }}>
+                        <button onClick={saveEdit} disabled={loading}>Guardar</button>
+                        <button onClick={cancelEdit} disabled={loading}>Cancelar</button>
+                      </div>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td>{u.nombre}</td>
+                    <td>{u.apellido}</td>
+                    <td>{u.email}</td>
+                    <td>{u.rol}</td>
+                    <td style={{ textAlign: 'center' }}>{u.activo ? 'Sí' : 'No'}</td>
+                    <td>
+                      <div style={{ display: 'flex', gap: 6 }}>
+                        <button onClick={() => startEdit(u)} disabled={loading}>Editar</button>
+                        <button onClick={() => eliminar(u.id)} disabled={loading}>Eliminar</button>
+                      </div>
+                    </td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>

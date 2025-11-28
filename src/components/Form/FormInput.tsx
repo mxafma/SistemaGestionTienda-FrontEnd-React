@@ -21,6 +21,7 @@ const FormInput: React.FC<FormInputProps> = ({
       <input 
         type={type} 
         id={id} 
+        name={id}
         className="form-control" 
         required={required}
         placeholder={placeholder}

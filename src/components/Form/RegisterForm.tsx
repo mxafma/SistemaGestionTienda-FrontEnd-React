@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FormInput from './FormInput';
 import FormButton from './FormButton';
+import { createUsuario } from '../../shared/hooks/usuariosApi';
+import type { UsuarioPayload } from '../../shared/hooks/usuariosApi';
 
 const RegisterForm: React.FC = () => {
   const [errors, setErrors] = useState<{[key: string]: string}>({});
@@ -27,12 +30,54 @@ const RegisterForm: React.FC = () => {
     }
     
     setErrors(newErrors);
-    
+
     // Si no hay errores, enviar
     if (Object.keys(newErrors).length === 0) {
-      console.log('Registro válido');
-      // Aquí iría la lógica de registro
+      submitRegistration(formData);
     }
+  };
+
+  const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const submitRegistration = async (formData: FormData) => {
+    setServerError(null);
+    setSubmitting(true);
+    try {
+      const nombre = (formData.get('firstName') as string) || '';
+      const apellido = (formData.get('lastName') as string) || '';
+      const email = (formData.get('email') as string) || '';
+      const password = (formData.get('password') as string) || '';
+      // build payload matching backend expectations (temporary passwordHash)
+      const payload: UsuarioPayload = {
+        nombre,
+        apellido,
+        email,
+        rol: 'USER',
+        activo: true,
+      };
+      if (password) {
+        // backend currently expects passwordHash; send password as passwordHash
+        (payload as any).passwordHash = password;
+      }
+
+      const created = await createUsuario(payload as any);
+      // on success, navigate to login
+      navigate('/login');
+    } catch (err: unknown) {
+      let msg = 'Error al registrar usuario';
+      if ((err as any)?.response?.data) {
+        const d = (err as any).response.data;
+        if (typeof d === 'string') msg += ': ' + d;
+        else if (d.message) msg += ': ' + d.message;
+        else msg += ': ' + JSON.stringify(d);
+      } else if (err instanceof Error) {
+        msg += ': ' + err.message;
+      }
+      setServerError(msg);
+    }
+    setSubmitting(false);
   };
 
   return (
@@ -125,7 +170,8 @@ const RegisterForm: React.FC = () => {
             </label>
           </div>
           
-          <FormButton text="Crear cuenta" />
+          {serverError && <div className="alert alert-danger">{serverError}</div>}
+          <FormButton text={submitting ? 'Creando...' : 'Crear cuenta'} disabled={submitting} />
           
           <div className="text-center mt-3">
             <p className="mb-0">
