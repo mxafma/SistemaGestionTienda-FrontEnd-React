@@ -9,6 +9,10 @@ import Contact from '../pages/Contact/Contact';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import ProductDetail from '../pages/ProductDetail/ProductDetail';
+import AdminDashboard from '../pages/Admin/AdminDashboard';
+import ProductosPage from '../pages/Admin/ProductosPage';
+import UsuariosPage from '../pages/Admin/UsuariosPage';
+import BoletasPage from '../pages/Admin/BoletasPage';
 
 const AppRouter = () => {
   return (
@@ -25,6 +29,11 @@ const AppRouter = () => {
           <Route path="register" element={<Register />} />
           <Route path="cart" element={<Cart />} />
         </Route>
+        {/* Rutas de administrador */}
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/productos" element={<ProductosPage />} />
+        <Route path="/admin/usuarios" element={<UsuariosPage />} />
+        <Route path="/admin/boletas" element={<BoletasPage />} />
       </Routes>
     </BrowserRouter>
   );
