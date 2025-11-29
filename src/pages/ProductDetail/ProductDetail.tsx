@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import ProductGallery from '../../components/ProductCard/ProductGallery';
 import ProductDetailInfo from '../../components/ProductCard/ProductDetailInfo';
 import RelatedProducts from '../../components/ProductCard/RelatedProducts';
-import productsData from '../../data/products.json';
 import type { Product } from '../../shared/types/types';
+import { getProductoById, getProductos } from '../../shared/hooks/productosApi';
+import { mapProductoToProduct, mapProductosToProducts } from '../../shared/hooks/productAdapter';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,14 +13,27 @@ const ProductDetail: React.FC = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    // Cargar todos los productos
-    setAllProducts(productsData);
+    const fetch = async () => {
+      try {
+        // Cargar producto individual desde backend y mapear
+        if (id) {
+          const dto = await getProductoById(id);
+          const mapped = mapProductoToProduct(dto);
+          setProduct(mapped);
+        }
 
-    // Buscar el producto específico
-    if (id) {
-      const foundProduct = productsData.find(p => p.id === parseInt(id, 10));
-      setProduct(foundProduct || null);
-    }
+        // Cargar lista completa para productos relacionados
+        const dtos = await getProductos();
+        const mappedList = mapProductosToProducts(dtos);
+        setAllProducts(mappedList);
+      } catch (err) {
+        console.error('Error cargando detalle de producto:', err);
+        setProduct(null);
+        setAllProducts([]);
+      }
+    };
+
+    fetch();
   }, [id]);
 
   const handleAddToCart = (productId: number, quantity: number) => {
@@ -38,9 +52,7 @@ const ProductDetail: React.FC = () => {
   }
 
   // Usar el array de imágenes si existe, si no, usar la imagen principal
-  const productImages = product.images && product.images.length > 0 
-    ? product.images 
-    : [product.image];
+  const productImages = product.images && product.images.length > 0 ? product.images : [product.image];
 
   return (
     <div className="container py-5">
@@ -56,13 +68,7 @@ const ProductDetail: React.FC = () => {
         {/* Información del producto */}
         <div className="col-md-6">
           <ProductDetailInfo 
-            product={{
-              id: product.id,
-              nombre: product.name,
-              precio: product.price,
-              descripcion: product.description
-            }}
-            originalProduct={product}
+            product={product}
             onAddToCart={handleAddToCart}
           />
         </div>

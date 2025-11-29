@@ -11,7 +11,10 @@ const ProductList: React.FC<ProductListProps> = ({ products, agregarAlCarrito })
   return (
     <div className="container my-4">
       <div className="row">
-        {products.map((product: Product) => (
+        
+        {products
+          .filter((p) => p.active !== false)  // <--- para filtrar los inactivos
+          .map((product: Product) => (
           <div key={product.id} className="col-md-6 col-lg-4 col-xl-3 mb-4">
             <ProductCard product={product} onAddToCart={agregarAlCarrito} />
           </div>

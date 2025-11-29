@@ -5,54 +5,55 @@ import ProductDescription from './ProductDescription';
 import QuantitySelector from './QuantitySelector';
 import AddToCartButton from './AddToCartButton';
 
-interface Product {
-  id: number;
-  nombre: string;
-  precio: number;
-  descripcion: string;
-}
-
 interface ProductDetailInfoProps {
-  product: Product;
-  originalProduct: ProductType; // Producto completo para el carrito
-  onAddToCart?: (productId: number, quantity: number) => void; // Ahora opcional
+  product: ProductType; // Usa SIEMPRE el Product unificado (name, price, description, etc.)
+  onAddToCart?: (productId: number, quantity: number) => void;
 }
 
-const ProductDetailInfo: React.FC<ProductDetailInfoProps> = ({ product, originalProduct, onAddToCart }) => {
+const ProductDetailInfo: React.FC<ProductDetailInfoProps> = ({ product, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
-  
-  // 🛒 Hook del carrito
   const { addToCart } = useCart();
 
-  // Resetear cantidad cuando cambie el producto
   useEffect(() => {
     setQuantity(1);
   }, [product.id]);
 
-  // Función para agregar al carrito
   const handleAddToCart = () => {
-    addToCart(originalProduct, quantity);
-    
-    // Si hay callback legacy, también ejecutarlo
+    addToCart(product, quantity);
+
     if (onAddToCart) {
       onAddToCart(product.id, quantity);
     }
   };
 
+  // Si el producto está inactivo, solo mostramos info básica
+  if (product.active === false) {
+    return (
+      <div>
+        <h2 className="fw-bold">{product.name}</h2>
+        <p className="text-muted">Este producto no está disponible actualmente.</p>
+        <ProductDescription description={product.description} />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h2 className="fw-bold">{product.nombre}</h2>
+      <h2 className="fw-bold">{product.name}</h2>
+
       <p className="text-muted fs-5 mb-3">
-        {new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(product.precio)}
+        {new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' })
+          .format(product.price)}   {/* <- AQUÍ: usamos price, no precio */}
       </p>
-      <ProductDescription description={product.descripcion} />
-      
-      <QuantitySelector 
+
+      <ProductDescription description={product.description} />
+
+      <QuantitySelector
         quantity={quantity}
         onQuantityChange={setQuantity}
       />
-      
-      <AddToCartButton 
+
+      <AddToCartButton
         productId={product.id}
         quantity={quantity}
         onAddToCart={handleAddToCart}

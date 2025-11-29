@@ -14,9 +14,10 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
   currentProductId, 
   maxProducts = 4 
 }) => {
-  // Filtrar productos relacionados (excluir el actual)
+  // 1) Excluir el producto actual
+  // 2) Excluir productos inactivos (active === false)
   const relatedProducts = products
-    .filter(product => product.id !== currentProductId)
+    .filter(p => p.id !== currentProductId && p.active !== false)
     .sort(() => 0.5 - Math.random()) // Ordenar aleatoriamente
     .slice(0, maxProducts);
 

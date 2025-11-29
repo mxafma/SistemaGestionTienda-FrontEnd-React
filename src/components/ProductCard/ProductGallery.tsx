@@ -1,24 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface ProductGalleryProps {
-  images?: string[];  // Opcional
-  image?: string;     // Imagen principal (fallback)
+  images?: string[];   // Opcional
+  image?: string;      // Imagen principal (fallback)
   productName: string;
 }
 
-const ProductGallery: React.FC<ProductGalleryProps> = ({ 
-  images, 
-  image, 
-  productName 
-}) => {
-  // Si hay múltiples imágenes, usar images; si no, usar image como array
-  const galleryImages = images && images.length > 0 ? images : [image || ''];
-  const [mainImage, setMainImage] = useState(galleryImages[0]);
+const PLACEHOLDER =
+  "https://media.makeameme.org/created/placeholder-9d395b173f.jpg";
 
-  // Actualizar imagen principal cuando cambien las props
+const ProductGallery: React.FC<ProductGalleryProps> = ({
+  images,
+  image,
+  productName,
+}) => {
+  // Normalizamos: si hay múltiples imágenes, usamos images; si no, usamos image como array; si no hay nada, array vacío
+  const galleryImages: string[] =
+    images && images.length > 0
+      ? images
+      : image
+      ? [image]
+      : [];
+
+  const [mainImage, setMainImage] = useState<string>(
+    galleryImages[0] || PLACEHOLDER
+  );
+
+  // Actualizar imagen principal cuando cambian las props
   useEffect(() => {
-    setMainImage(galleryImages[0]);
-  }, [images, image, galleryImages]);
+    const imgs =
+      images && images.length > 0
+        ? images
+        : image
+        ? [image]
+        : [];
+
+    if (imgs.length > 0) {
+      setMainImage(imgs[0]);
+    } else {
+      setMainImage(PLACEHOLDER);
+    }
+  }, [images, image]);
 
   const handleThumbnailClick = (selectedImage: string) => {
     setMainImage(selectedImage);
@@ -27,32 +49,66 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({
   return (
     <div>
       {/* Imagen principal */}
-      <img 
-        src={mainImage} 
-        className="img-fluid rounded shadow-sm mb-3" 
-        alt={productName}
-        style={{ width: '100%', height: '400px', objectFit: 'cover' }}
-        onError={() => {/* Error loading image */}}
-      />
-      
-      {/* Miniaturas - Solo mostrar si hay más de una imagen */}
+      <div
+        style={{
+          width: "100%",
+          height: "400px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          backgroundColor: "#fff",
+        }}
+      >
+        <img
+          src={mainImage}
+          className="img-fluid rounded shadow-sm mb-3"
+          alt={productName}
+          style={{
+            maxWidth: "100%",
+            maxHeight: "100%",
+            objectFit: "contain", // si prefieres recorte, cambia a "cover"
+          }}
+          onError={(e) => {
+            if (e.currentTarget.src !== PLACEHOLDER) {
+              e.currentTarget.src = PLACEHOLDER;
+            }
+          }}
+        />
+      </div>
+
+      {/* Miniaturas - solo si hay más de una imagen válida */}
       {galleryImages.length > 1 && (
-        <div className="d-flex flex-wrap gap-2">
+        <div className="d-flex flex-wrap gap-2 mt-2">
           {galleryImages.map((galleryImage, index) => (
-            <img
+            <div
               key={index}
-              src={galleryImage}
-              className={`img-thumbnail thumb-img ${mainImage === galleryImage ? 'border-primary border-3' : ''}`}
-              style={{ 
-                width: '70px', 
-                height: '70px', 
-                objectFit: 'cover', 
-                cursor: 'pointer' 
+              style={{
+                width: "70px",
+                height: "70px",
+                overflow: "hidden",
+                cursor: "pointer",
               }}
-              alt={`${productName} ${index + 1}`}
-              onClick={() => handleThumbnailClick(galleryImage)}
-              onError={() => {/* Error loading thumbnail */}}
-            />
+            >
+              <img
+                src={galleryImage}
+                className={`img-thumbnail thumb-img ${
+                  mainImage === galleryImage ? "border-primary border-3" : ""
+                }`}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+                alt={`${productName} ${index + 1}`}
+                onClick={() => handleThumbnailClick(galleryImage)}
+                onError={(e) => {
+                  if (e.currentTarget.src !== PLACEHOLDER) {
+                    e.currentTarget.src = PLACEHOLDER;
+                  }
+                }}
+              />
+            </div>
           ))}
         </div>
       )}
