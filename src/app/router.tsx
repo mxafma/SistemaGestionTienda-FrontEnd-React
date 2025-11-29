@@ -13,6 +13,7 @@ import AdminDashboard from '../pages/Admin/AdminDashboard';
 import ProductosPage from '../pages/Admin/ProductosPage';
 import UsuariosPage from '../pages/Admin/UsuariosPage';
 import BoletasPage from '../pages/Admin/BoletasPage';
+import ProtectedRoute from '../shared/ProtectedRoute';
 
 const AppRouter = () => {
   return (
@@ -29,11 +30,39 @@ const AppRouter = () => {
           <Route path="register" element={<Register />} />
           <Route path="cart" element={<Cart />} />
         </Route>
-        {/* Rutas de administrador */}
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/productos" element={<ProductosPage />} />
-        <Route path="/admin/usuarios" element={<UsuariosPage />} />
-        <Route path="/admin/boletas" element={<BoletasPage />} />
+        {/* Rutas de administrador (protegidas) */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/productos"
+          element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <ProductosPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/usuarios"
+          element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <UsuariosPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/boletas"
+          element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <BoletasPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
