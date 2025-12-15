@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormInput from './FormInput';
 import FormButton from './FormButton';
-import { createUsuario } from '../../shared/hooks/usuariosApi';
-import type { UsuarioPayload } from '../../shared/hooks/usuariosApi';
+import { register } from '../../shared/hooks/authApi';
+import type { RegisterRequest } from '../../shared/hooks/authApi';
 
 const RegisterForm: React.FC = () => {
   const [errors, setErrors] = useState<{[key: string]: string}>({});
@@ -49,20 +49,17 @@ const RegisterForm: React.FC = () => {
       const apellido = (formData.get('lastName') as string) || '';
       const email = (formData.get('email') as string) || '';
       const password = (formData.get('password') as string) || '';
-      // build payload matching backend expectations (temporary passwordHash)
-      const payload: UsuarioPayload = {
+      
+      // Build payload for /api/auth/register endpoint
+      const payload: RegisterRequest = {
         nombre,
         apellido,
         email,
-        rol: 'USER',
-        activo: true,
+        password,
+        rol: 'CLIENTE', // Default role for self-registration
       };
-      if (password) {
-        // backend currently expects passwordHash; send password as passwordHash
-        (payload as any).passwordHash = password;
-      }
 
-      const created = await createUsuario(payload as any);
+      await register(payload);
       // on success, navigate to login
       navigate('/login');
     } catch (err: unknown) {

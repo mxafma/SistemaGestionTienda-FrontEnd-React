@@ -9,7 +9,7 @@ const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { loginLocal } = useAuth();
+  const { login: authLogin } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,15 +27,9 @@ const LoginForm: React.FC = () => {
     setSubmitting(true);
     try {
       const res = await login({ email, password });
-      if (res && res.usuario) {
-        // strip sensitive fields before saving
-        const { passwordHash, ...safeUser } = res.usuario as any;
-        try {
-          // use AuthContext to persist user centrally
-          loginLocal(safeUser);
-        } catch (e) {
-          console.warn('No se pudo guardar usuario en localStorage via AuthContext', e);
-        }
+      if (res && res.accessToken && res.usuario) {
+        // Use AuthContext to persist token and user
+        authLogin(res.accessToken, res.usuario);
         navigate('/');
       } else {
         setError(res?.message || 'Usuario o contraseña incorrectos');
