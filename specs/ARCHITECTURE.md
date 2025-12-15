@@ -69,3 +69,19 @@ src/
 
   styles/
     global.css
+  auth-service
+
+auth-service
+Endpoint	Acceso
+POST /api/auth/login	Público
+POST /api/auth/register	Público
+/swagger-ui/**, /v3/api-docs/**	Público
+/api/usuarios/**	ROLE_ADMIN
+Otros	Autenticado
+ventas-service
+Endpoint	Acceso
+GET /api/productos/**	Público
+GET /api/categorias/**	Público
+/swagger-ui/**, /v3/api-docs/**	Público
+POST/PUT/PATCH/DELETE /api/**	ROLE_ADMIN
+Otros

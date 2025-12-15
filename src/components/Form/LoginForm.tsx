@@ -12,8 +12,8 @@ const LoginForm: React.FC = () => {
   const { login: authLogin } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
+    e.preventDefault(); // Evita la recarga de la página
+    setError(null); // Limpia el error previo
     const form = e.target as HTMLFormElement;
     const fd = new FormData(form);
     const email = (fd.get('email') as string) || '';
@@ -28,7 +28,7 @@ const LoginForm: React.FC = () => {
     try {
       const res = await login({ email, password });
       if (res && res.accessToken && res.usuario) {
-        // Use AuthContext to persist token and user
+        // Usa AuthContext para guardar el token y el usuario
         authLogin(res.accessToken, res.usuario);
         navigate('/');
       } else {
