@@ -6,6 +6,7 @@ import { login } from '../../shared/hooks/authApi';
 import { useAuth } from '../../shared/AuthContext';
 
 const LoginForm: React.FC = () => {
+  console.log('LoginForm rendered');
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -13,7 +14,6 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Evita la recarga de la página
-    setError(null); // Limpia el error previo
     const form = e.target as HTMLFormElement;
     const fd = new FormData(form);
     const email = (fd.get('email') as string) || '';
@@ -42,8 +42,9 @@ const LoginForm: React.FC = () => {
       } else {
         setError('Error al comunicarse con el servidor');
       }
+    } finally {
+      setSubmitting(false); // No uses un retraso aquí
     }
-    setSubmitting(false);
   };
 
   return (

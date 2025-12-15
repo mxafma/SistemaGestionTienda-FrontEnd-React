@@ -1,5 +1,5 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react'
 import AppRouter from './app/router';
 import { CartProvider } from './entities/cart/CartContext';
 import { AuthProvider } from './shared/AuthContext';

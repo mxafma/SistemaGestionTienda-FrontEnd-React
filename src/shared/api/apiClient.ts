@@ -93,15 +93,25 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    if (error.response?.status === 401) {
-      // Token expired or invalid
-      clearAuthData();
-      if (onUnauthorized) {
-        onUnauthorized();
-      } else {
-        // Fallback: redirect to login
-        window.location.href = '/login';
+    const status = error.response?.status;
+    const requestUrl = (error.config as any)?.url || '';
+    const token = getToken();
+
+    if (status === 401) {
+      // Do not redirect on login failures or when not authenticated
+      const isAuthLogin = /\/auth\/login/i.test(requestUrl);
+      const hasToken = !!token;
+
+      if (hasToken && !isAuthLogin) {
+        // Token expired or invalid for authenticated requests
+        clearAuthData();
+        if (onUnauthorized) {
+          onUnauthorized();
+        } else {
+          window.location.href = '/login';
+        }
       }
+      // For login failures or unauthenticated requests, just propagate the error
     }
     return Promise.reject(error);
   }
